@@ -1,0 +1,4 @@
+.env
+*.db
+tempCodeRunnerFile.*
+__pycache__
