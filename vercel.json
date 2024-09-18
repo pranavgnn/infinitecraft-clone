@@ -2,9 +2,9 @@
     "version": 2,
     "builds": [
         {
-            "src": "server/main.py",
+            "src": "main.py",
             "use": "@vercel/python",
-            "requirements": "./server/requirements.txt"
+            "requirements": "./requirements.txt"
         }
     ]
 }
