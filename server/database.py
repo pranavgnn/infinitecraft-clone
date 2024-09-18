@@ -1,8 +1,22 @@
-import sqlite3
+import psycopg2
+import os
 
 class Database:
     def __init__(self) -> None:
-        connection = sqlite3.connect("cache.db", check_same_thread=False)
+
+        host = os.environ.get("SUPABASE_HOST")
+        dbname = os.environ.get("SUPABASE_DBNAME")
+        user = os.environ.get("SUPABASE_USER")
+        password = os.environ.get("SUPABASE_PASSWORD")
+        port = os.environ.get("SUPABASE_PORT")
+
+        connection = psycopg2.connect(
+            host = host,
+            dbname = dbname,
+            user = user,
+            password = password,
+            port = port
+        )
         cursor = connection.cursor()
 
         cursor.execute("CREATE TABLE IF NOT EXISTS Cache (item1 text, item2 text, emoji text, combination text)")
@@ -41,6 +55,9 @@ class Database:
 
 
 if __name__ == "__main__":
+    from dotenv import load_dotenv
+    load_dotenv()
+
     db = Database()
     # db.set("Stone", "Stick", "🔨", "Hammer")
     # db.get("Stone", "Stick")
