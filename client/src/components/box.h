@@ -2,6 +2,7 @@
 #define BOX_H
 
 #include "raylib.h"
+#include "sidebar.h"
 
 typedef struct DraggableBox
 {
@@ -16,7 +17,7 @@ typedef struct DraggableBox
 
 DraggableBox CreateDraggableBox(int id, float x, float y, float width, float height, const char *text, Font font);
 
-void UpdateDraggableBox(DraggableBox *box);
+void UpdateDraggableBox(DraggableBox *box, DraggableBox *placedItems, int *placedItemsCount, Sidebar *sidebar);
 
 void DrawDraggableBox(DraggableBox *box);
 

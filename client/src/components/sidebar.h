@@ -3,6 +3,8 @@
 
 #include "raylib.h"
 
+typedef struct DraggableBox DraggableBox;
+
 typedef struct SidebarItem
 {
     int x, y;
@@ -19,12 +21,18 @@ typedef struct Sidebar
     int itemCount;
     Color bgColor;
     SidebarItem *items;
+    float scrollPosition;
+    float scrollBarHeight;
 } Sidebar;
 
 Sidebar CreateSidebar();
 
 void AddSidebarItem(Sidebar *sidebar, char text[]);
 
+void UpdateSidebarItem(SidebarItem *item, DraggableBox *placedItems, int *placedItemsCount, Font font);
+
 void DrawSidebar(Sidebar *sidebar, Font font);
+
+void UpdateSidebarScroll(Sidebar *sidebar);
 
 #endif

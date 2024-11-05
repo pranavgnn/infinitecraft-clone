@@ -3,15 +3,24 @@
 
 #include "components/box.h"
 #include "components/sidebar.h"
+// #include "components/frame.h"
+
+#include "util/requests.h"
 
 DraggableBox placedItems[1000];
 int placedItemsCount = 0;
 
 int main()
 {
+    // char *response;
+
+    // response = requestGET("http://127.0.0.1/craft?item1=Fire&item2=Water");
+
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(GetScreenWidth(), GetScreenHeight(), "InfiniteCraft Clone - ADS Project");
     MaximizeWindow();
+
+    // Frame frame = newFrame((Vector2){20, 20}, (Vector2){100, 100});
 
     Font font = LoadFontEx("resources/fonts/Roboto-Medium.ttf", 32, 0, 250);
     if (!font.texture.id)
@@ -24,12 +33,10 @@ int main()
     AddSidebarItem(&sidebar, "Air");
     AddSidebarItem(&sidebar, "Wind");
 
-    DraggableBox boxes[3];
-    boxes[0] = CreateDraggableBox(1, 250, 100, 150, 50, "Water", font);
-    boxes[1] = CreateDraggableBox(2, 450, 100, 150, 50, "Fire", font);
-    boxes[2] = CreateDraggableBox(3, 650, 100, 150, 50, "Earth", font);
+    DraggableBox placedItems[1000];
+    int placedItemsCount = 0;
 
-    SetTargetFPS(60);
+    // ...
 
     while (!WindowShouldClose())
     {
@@ -38,16 +45,21 @@ int main()
 
         DrawSidebar(&sidebar, font);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < sidebar.itemCount; i++)
+            UpdateSidebarItem(&sidebar.items[i], placedItems, &placedItemsCount, font);
+
+        UpdateSidebarScroll(&sidebar);
+
+        for (int i = 0; i < placedItemsCount; i++)
         {
-            UpdateDraggableBox(&boxes[i]);
-            DrawDraggableBox(&boxes[i]);
+            UpdateDraggableBox(&placedItems[i], placedItems, &placedItemsCount, &sidebar);
+            DrawDraggableBox(&placedItems[i]);
         }
 
         EndDrawing();
     }
 
-    CloseWindow(); // Close the window and clean up
+    CloseWindow();
 
     return 0;
 }

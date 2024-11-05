@@ -296,7 +296,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
         # Libraries for Windows desktop compilation
         # NOTE: WinMM library required to set high-res timer resolution
-        LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
+        LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm -lws2_32
     endif
     ifeq ($(PLATFORM_OS),LINUX)
         # Libraries for Debian GNU/Linux desktop compiling
@@ -334,15 +334,6 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # NOTE: It could require additional packages installed: libglfw3-dev
         LDLIBS += -lglfw
     endif
-endif
-ifeq ($(PLATFORM),PLATFORM_RPI)
-    # Libraries for Raspberry Pi compiling
-    # NOTE: Required packages: libasound2-dev (ALSA)
-    LDLIBS = -lraylib -lbrcmGLESv2 -lbrcmEGL -lpthread -lrt -lm -lbcm_host -ldl
-endif
-ifeq ($(PLATFORM),PLATFORM_WEB)
-    # Libraries for web (HTML5) compiling
-    LDLIBS = $(RAYLIB_RELEASE_PATH)/libraylib.a
 endif
 
 # Define a recursive wildcard function
